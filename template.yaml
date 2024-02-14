@@ -154,7 +154,7 @@ spec:
       name: Log message
       action: debug:log
       input: 
-        message: 'Parameters -> Application name : ${{ application-name }}\n'
+        message: 'Parameters -> Application name : ${{ parameters.application-name }}'
         listWorkspace: true
     - id: publish-scm
       name: Publish-scm
@@ -225,6 +225,6 @@ spec:
       - title: Open Component in catalog
         icon: catalog
         entityRef: ${{ steps.register.output.entityRef }}
-    message-0 : 'parameters -> Application name : ${{ application-name }}\n'
-    message-1 : 'parameters -> Description      : ${{ description }}\n'
+    message-0 : 'parameters -> Application name : ${{ parameters.application-name }}\n'
+    message-1 : 'parameters -> Description      : ${{ parameters.description }}\n'
 
