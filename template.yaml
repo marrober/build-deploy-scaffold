@@ -32,9 +32,25 @@ spec:
         - source-repo
       properties:
         source-repo:
-            title: Source code repository URL
-            type: string
-            description: The existing git repository for the application source code to be built
+          title: Source code repository
+          type: object
+          properties:
+            host:
+              title: Repository host 
+              type: string
+              description: The SCM Host
+              enum:
+                - github.com
+                - gitlab.com
+              default: github.com
+            owner: 
+              title: Repository owner
+              type: string
+              description: The SCM host organisation / group
+            repo-name:
+              title: Repository name
+              type: string
+              description: Repository name 
     - title: Provide information for the development cluster
       required:
         - cluster-name
@@ -144,7 +160,7 @@ spec:
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: "${{ parameters.source-repo }}"
+        repoUrl: "${{ parameters.source-repo.host }}?repo=${{ parameters.source-code.repo-name }}&owner={{ parameters.source-repo.owner}}"
         repoVisibility: private
 
     - id: register
