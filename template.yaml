@@ -172,14 +172,16 @@ spec:
         url: ./manifests
         copyWithoutTemplating: []
         values:
-          component_id: ${{ parameters.component_id }}
-          description: ${{ parameters.description }}
-          destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.component_id}}-gitops.git
-          source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.component_id}}.git
-          repository_name: ${{parameters.component_id}}
+          application-name: ${{ parameters.application-name }}
+          cd-git-username: ${{ parameters.cd-git-username }}
+          cd-git-email-address: ${{ parameters.cd-git-email-address }}
+          smee_io_identifier: ${{ parameters.smee_io_identifier }}
+          destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.application-name }}-gitops.git
+          source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.application-name }.git
+          repository_name: ${{parameters.application-name}}
           git_owner: ${{ parameters.repo.owner }}
-          cluster: .apps.cluster-v788m.sandbox1746.opentlc.com
-          namespace: ${{ parameters.component_id }}-dev
+          cluster: ${{ values.cluster-name }}
+          namespace: ${{ parameters.application-name }}-dev
           image_registry: ${{ parameters.image_registry }}
           image_host: ${{ parameters.image_host }}
           image_organization: ${{ parameters.image_organization }}
@@ -187,7 +189,7 @@ spec:
           image_tag: ${{ parameters.image_tag }}
           port: 8080
           repository_host: ${{ parameters.repo.host }}
-          deployment_name: quarkus-template
+          deployment_name: ${{ parameters.application-name }}
           user: ${{ user.entity.metadata.name }}
         targetPath: ./tenant-gitops
 
@@ -195,9 +197,9 @@ spec:
       name: Publishing to Resource Repository
       action: publish:gitlab
       input:
-        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.component_id}}-gitops"
-        title: gitops resources for ${{ parameters.component_id }}
-        description: gitops resources for ${{ parameters.component_id }}
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.application-name }}-gitops"
+        title: gitops resources for ${{ parameters.application-name }}
+        description: gitops resources for ${{ parameters.application-name }}
         sourcePath: ./tenant-gitops
         repoVisibility: public
 
@@ -205,10 +207,10 @@ spec:
       name: Create ArgoCD Resources
       action: argocd:create-resources
       input:
-        appName: ${{ parameters.component_id }}-bootstrap
+        appName: ${{ parameters.application-name }}-bootstrap
         argoInstance: main
-        namespace: janus-argocd
-        repoUrl: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.component_id }}-gitops.git
+        namespace: dh-argocd
+        repoUrl: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.application-name }}-gitops.git
         path: 'argocd/'
 
   output:
