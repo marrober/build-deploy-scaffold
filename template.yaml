@@ -20,7 +20,7 @@ spec:
           title: Application name
           type: string
           description: Unique name of the application
-          ui:field: EntityNamePicker
+          pattern: '^[A-Z][A-Za-z0-9_]*$'
           maxLength: 20
         description:
           title: Description
@@ -160,7 +160,7 @@ spec:
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: "${{ parameters.source-repo.host }}?repo=${{ parameters.source-code.repo-name }}&owner={{ parameters.source-repo.owner}}"
+        repoUrl: ${{ parameters.source-repo.host }}?repo=${{ parameters.source-code.repo-name }}&owner=${{ parameters.source-repo.owner}}.git
         repoVisibility: private
 
     - id: register
