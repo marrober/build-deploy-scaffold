@@ -20,7 +20,7 @@ spec:
           title: Application name
           type: string
           description: Unique name of the application
-          pattern: '^[A-Z][A-Za-z0-9_]*$'
+          pattern: '^[A-Za-z0-9_]*$'
           maxLength: 20
         description:
           title: Description
