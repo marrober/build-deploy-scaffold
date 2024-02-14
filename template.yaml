@@ -31,7 +31,7 @@ spec:
       required:
         - source-repo
       properties:
-        repo:
+        source-repo:
           title: Repository Location
           type: object
           properties:
