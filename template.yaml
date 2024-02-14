@@ -120,11 +120,11 @@ spec:
             host:
               title: Repo Host
               type: string
-              description: Your SCM host
-            owner:
-              title: Repo Owner
-              type: string
-              description: Your SCM host organization/group
+              ui:field: RepoUrlPicker
+              ui:options:
+                allowedHosts:
+                  - github.com
+                  - gitlab.com
             cd-git-username:
               title: Username for CD repo
               type: string
@@ -138,14 +138,14 @@ spec:
       name: Log message
       action: debug:log
       input: 
-        message: 'Here are the parameters\nApplication name : ${{ application-name }}\n'
+        message: 'Parameters -> Application name : ${{ application-name }}\n'
         listWorkspace: true
     - id: publish-scm
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: "${{ parameters.source-repo.host }}?owner=${{ parameters.source-repo.owner }}&repo=${{ parameters.source-repo.name }}"
-        repoVisibility: public
+        repoUrl: "${{ parameters.source-repo }}"
+        repoVisibility: private
 
     - id: register
       name: Register
@@ -166,7 +166,7 @@ spec:
           cd-git-email-address: ${{ parameters.cd-git-email-address }}
           smee_io_identifier: ${{ parameters.smee_io_identifier }}
           destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.application-name }}-gitops.git
-          source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.application-name }.git
+          source_repository: https://${{ parameters.source-repo }}
           repository_name: ${{parameters.application-name}}
           git_owner: ${{ parameters.repo.owner }}
           cluster: ${{ values.cluster-name }}
@@ -204,10 +204,11 @@ spec:
 
   output:
     links:
-      - title: Source Code Repository
+      - title: GitOps content SCM
         url: ${{ steps.publish.output.remoteUrl }}
       - title: Open Component in catalog
         icon: catalog
         entityRef: ${{ steps.register.output.entityRef }}
-    message : 'output : parameters\nApplication name : ${{ application-name }}\n'
+    message-0 : 'parameters -> Application name : ${{ application-name }}\n'
+    message-1 : 'parameters -> Description      : ${{ description }}\n'
 
