@@ -151,6 +151,12 @@ spec:
               type: string
               description: Email address of the user named above
   steps:
+    - id: log-message
+      name: Log message
+      action: debug:log
+      input: 
+        message: 'Here are the parameters\nApplication name : ${{ application-name }}\n'
+        listWorkspace: true
     - id: publish-scm
       name: Publish-scm
       action: publish:github
@@ -220,3 +226,5 @@ spec:
       - title: Open Component in catalog
         icon: catalog
         entityRef: ${{ steps.register.output.entityRef }}
+    message : 'output : parameters\nApplication name : ${{ application-name }}\n'
+
