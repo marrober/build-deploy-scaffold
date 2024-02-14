@@ -168,7 +168,7 @@ spec:
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish-scm.output.repoContentsUrl }}
-        catalogInfoPath: "/catalog-info.yaml"
+        catalogInfoPath: "/manifest/catalog-info.yaml"
 
     - id: template-gitops-deployment
       name: Generating Deployment Resources
