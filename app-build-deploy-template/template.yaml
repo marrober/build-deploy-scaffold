@@ -54,6 +54,10 @@ spec:
               type: string
               description: Email address of the user named above
               default: marrober@redhat.com
+            token: 
+              title: Github authentication token
+              type: string
+              ui:field: Secret
     - title: Provide information for the development cluster
       required:
         - cluster_name
@@ -184,6 +188,7 @@ spec:
       input:
         repoUrl: '"${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.source_code_repo.repo_name }}"'
         repoVisibility: public
+        token: ${{ parameters.source_code_repo.token }}
 
     - id: register
       name: Register
