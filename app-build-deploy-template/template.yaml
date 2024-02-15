@@ -20,14 +20,40 @@ spec:
           title: Application name
           type: string
           description: Unique name of the application
-          pattern: '^[A-Za-z0-9_]*$'
+          pattern: '^[a-z0-9_]*$'
           maxLength: 20
-          default: Pacman_1
+          default: pacman_1
         description:
           title: Description
           type: string
           description: Help others understand what this application does.
           default: A really useful application.
+    - title: Source code repository Information
+      required:
+        - source_code_repo
+      properties:
+        source_code_repo:
+          title: Repository Location
+          type: object
+          properties:
+            host:
+              title: Repo Host
+              type: string
+              ui:field: RepoUrlPicker
+              ui:options:
+                allowedHosts:
+                  - github.com
+                  - gitlab.com
+            cd_git_username:
+              title: Username for source code repo
+              type: string
+              description: The username for the source code repository
+              default: marrober
+            cd_git_email_address:
+              title: Email address for source code repo
+              type: string
+              description: Email address of the user named above
+              default: marrober@redhat.com
     - title: Provide information for the development cluster
       required:
         - cluster_name
@@ -107,9 +133,9 @@ spec:
                   description: Build Image tag
     - title: Gitops repository Information
       required:
-        - repo
+        - gitops_repo
       properties:
-        repo:
+        gitops_repo:
           title: Repository Location
           type: object
           properties:
@@ -138,18 +164,33 @@ spec:
       input: 
         message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_repo.host }} source_repo_name : ${{ parameters.source_repo.repo_name }} source_repo.owner : ${{ parameters.source_repo.owner}}'
         listWorkspace: true
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        copyWithoutTemplating:
+          - .github/workflows/*
+        values:
+          application_name: ${{ parameters.application_name }}
+          description: ${{ parameters.description }}
+          owner: ${{ user.entity.metadata.name }}
+          host: ${{ parameters.source_code_repo.host }}
+          destination: ${{ parameters.source_code_repo.owner }}/${{ parameters.application_name }}
+
     - id: publish-scm
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: "${{ parameters.source_repo.host }}?repo=${{ parameters.source_repo.repo_name }}&owner=${{ parameters.source_repo.owner}}"
+        repoUrl: "${{ parameters.source_code_repo.host }}?repo=${{ parameters.source_code_repo.repo_name }}&owner=${{ parameters.source_code_repo.owner}}"
         repoVisibility: public
+
     - id: register
       name: Register
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish-scm.output.repoContentsUrl }}
-        catalogInfoPath: "/manifest/catalog-info.yaml"
+        catalogInfoPath: "/skeleton/catalog-info.yaml"
 
     - id: template-gitops-deployment
       name: Generating Deployment Resources
@@ -162,10 +203,10 @@ spec:
           cd_git_username: ${{ parameters.cd_git_username }}
           cd_git_email_address: ${{ parameters.cd_git_email_address }}
           smee_io_identifier: ${{ parameters.smee_io_identifier }}
-          destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.application_name }}-gitops.git
+          destination: https://${{ parameters.gitops_repo.host }}/${{ parameters.gitops_repo.owner }}/${{parameters.application_name }}-gitops.git
           source_repository: https://${{ parameters.source_repo }}
           repository_name: ${{parameters.application_name}}
-          git_owner: ${{ parameters.repo.owner }}
+          git_owner: ${{ parameters.gitops_repo.owner }}
           cluster: ${{ values.cluster_name }}
           namespace: ${{ parameters.application_name }}-dev
           image_registry: ${{ parameters.image_registry }}
@@ -174,7 +215,7 @@ spec:
           image_name: ${{ parameters.component_id }}
           image_tag: ${{ parameters.image_tag }}
           port: 8080
-          repository_host: ${{ parameters.repo.host }}
+          repository_host: ${{ parameters.gitops_repo.host }}
           deployment_name: ${{ parameters.application-name }}
           user: ${{ user.entity.metadata.name }}
         targetPath: ./tenant-gitops
@@ -183,7 +224,7 @@ spec:
       name: Publishing to Resource Repository
       action: publish:gitlab
       input:
-        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.application_name }}-gitops"
+        repoUrl: "${{ parameters.gitops_repo.host }}?owner=${{ parameters.gitops_repo.owner }}&gitops_repo=${{parameters.application_name }}-gitops"
         title: gitops resources for ${{ parameters.application_name }}
         description: gitops resources for ${{ parameters.application_name }}
         sourcePath: ./tenant-gitops
@@ -196,13 +237,15 @@ spec:
         appName: ${{ parameters.application_name }}-bootstrap
         argoInstance: main
         namespace: dh_argocd
-        repoUrl: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.application_name }}-gitops.git
+        repoUrl: https://${{ parameters.gitops_repo.host }}/${{ parameters.gitops_repo.owner }}/${{ parameters.application_name }}-gitops.git
         path: 'argocd/'
 
   output:
     links:
+      - title: Source code SCM
+        url: ${{ steps.publish-scm.output.remoteUrl }}
       - title: GitOps content SCM
-        url: ${{ steps.publish.output.remoteUrl }}
+        url: ${{ steps.publish-gitops.output.remoteUrl }}
       - title: Open Component in catalog
         icon: catalog
         entityRef: ${{ steps.register.output.entityRef }}
