@@ -16,6 +16,11 @@ spec:
       required:
         - application-name
       properties:
+        component_id:
+          title: Name
+          type: string
+          maxLength: 20
+          pattern: '^[A-Z][A-Za-z0-9_]*$'
         application-name:
           title: Application name
           type: string
@@ -154,7 +159,8 @@ spec:
       name: Log message
       action: debug:log
       input: 
-        message: 'Parameters -> Application name : ${{ parameters.application-name }}'
+        # message: 'Parameters -> Application name : ${{ parameters.application-name }}'
+        message: 'Parameters -> component_id : ${{ parameters.component_id }}''
         listWorkspace: true
     - id: publish-scm
       name: Publish-scm
