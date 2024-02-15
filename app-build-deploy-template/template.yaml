@@ -14,14 +14,14 @@ spec:
   parameters:
     - title: Provide information for the application
       required:
-        - application-name
+        - application_name
       properties:
         component_id:
           title: Name
           type: string
           maxLength: 20
           pattern: '^[A-Z][A-Za-z0-9_]*$'
-        application-name:
+        application_name:
           title: Application name
           type: string
           description: Unique name of the application
@@ -35,9 +35,9 @@ spec:
           default: A really useful application.
     - title: Source code repository Information
       required:
-        - source-repo
+        - source_repo
       properties:
-        source-repo:
+        source_repo:
           title: Source code repository
           type: object
           properties:
@@ -54,17 +54,17 @@ spec:
               type: string
               description: The SCM host organisation / group
               default: marrober
-            repo-name:
+            repo_name:
               title: Repository name
               type: string
               description: Repository name 
               default: pacman
     - title: Provide information for the development cluster
       required:
-        - cluster-name
-        - smee-io-identifier
+        - cluster_name
+        - smee_io_identifier
       properties:
-        cluster-name:
+        cluster_name:
           title: Cluster name
           type: string
           description: The demolab environment to which the ci process will be deployed.
@@ -83,7 +83,7 @@ spec:
             - 'skylake'
             - 'whiskylake'
           default: skylake
-        smee-io-identifier:
+        smee_io_identifier:
           title: SMEE.IO Identifier
           type: string
           description: The identifier for the SMEE.IO proxy service used to enable webhooks to reach into demolab.
@@ -152,12 +152,12 @@ spec:
                 allowedHosts:
                   - github.com
                   - gitlab.com
-            cd-git-username:
+            cd_git_username:
               title: Username for CD repo
               type: string
               description: The username for the CD repository
               default: marrober
-            cd-git-email-address:
+            cd_git_email_address:
               title: Email address for CD repo
               type: string
               description: Email address of the user named above
@@ -167,13 +167,13 @@ spec:
       name: Log message
       action: debug:log
       input: 
-        message: 'Parameters -> Application name : ${{ parameters.application-name }}, component_id : ${{ parameters.component_id }} source-repo-host : ${{ parameters.source-repo.host }} source-repo.name : ${{ parameters.source-code.repo-name }} source-repo.owner : ${{ parameters.source-repo.owner}}'
+        message: 'Parameters -> Application name : ${{ parameters.application_name }}, component_id : ${{ parameters.component_id }} source_repo_host : ${{ parameters.source_repo.host }} source_repo.name : ${{ parameters.source_code.repo_name }} source_repo.owner : ${{ parameters.source_repo.owner}}'
         listWorkspace: true
     - id: publish-scm
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: "${{ parameters.source-repo.host }}?repo=${{ parameters.source-code.repo-name }}&owner=${{ parameters.source-repo.owner}}"
+        repoUrl: "${{ parameters.source_repo.host }}?repo=${{ parameters.source_code.repo_name }}&owner=${{ parameters.source_repo.owner}}"
         repoVisibility: public
 
     - id: register
@@ -190,16 +190,16 @@ spec:
         url: ./manifests
         copyWithoutTemplating: []
         values:
-          application-name: ${{ parameters.application-name }}
-          cd-git-username: ${{ parameters.cd-git-username }}
-          cd-git-email-address: ${{ parameters.cd-git-email-address }}
+          application-name: ${{ parameters.application_name }}
+          cd_git_username: ${{ parameters.cd_git_username }}
+          cd_git_email_address: ${{ parameters.cd_git_email_address }}
           smee_io_identifier: ${{ parameters.smee_io_identifier }}
-          destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.application-name }}-gitops.git
-          source_repository: https://${{ parameters.source-repo }}
-          repository_name: ${{parameters.application-name}}
+          destination: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.application_name }}-gitops.git
+          source_repository: https://${{ parameters.source_repo }}
+          repository_name: ${{parameters.application_name}}
           git_owner: ${{ parameters.repo.owner }}
-          cluster: ${{ values.cluster-name }}
-          namespace: ${{ parameters.application-name }}-dev
+          cluster: ${{ values.cluster_name }}
+          namespace: ${{ parameters.application_name }}-dev
           image_registry: ${{ parameters.image_registry }}
           image_host: ${{ parameters.image_host }}
           image_organization: ${{ parameters.image_organization }}
@@ -215,9 +215,9 @@ spec:
       name: Publishing to Resource Repository
       action: publish:gitlab
       input:
-        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.application-name }}-gitops"
-        title: gitops resources for ${{ parameters.application-name }}
-        description: gitops resources for ${{ parameters.application-name }}
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.application_name }}-gitops"
+        title: gitops resources for ${{ parameters.application_name }}
+        description: gitops resources for ${{ parameters.application_name }}
         sourcePath: ./tenant-gitops
         repoVisibility: public
 
@@ -225,10 +225,10 @@ spec:
       name: Create ArgoCD Resources
       action: argocd:create-resources
       input:
-        appName: ${{ parameters.application-name }}-bootstrap
+        appName: ${{ parameters.application_name }}-bootstrap
         argoInstance: main
-        namespace: dh-argocd
-        repoUrl: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.application-name }}-gitops.git
+        namespace: dh_argocd
+        repoUrl: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.application_name }}-gitops.git
         path: 'argocd/'
 
   output:
@@ -238,6 +238,6 @@ spec:
       - title: Open Component in catalog
         icon: catalog
         entityRef: ${{ steps.register.output.entityRef }}
-    message-0 : 'parameters -> Application name : ${{ parameters.application-name }}\n'
+    message-0 : 'parameters -> Application name : ${{ parameters.application_name }}\n'
     message-1 : 'parameters -> Description      : ${{ parameters.description }}\n'
 
