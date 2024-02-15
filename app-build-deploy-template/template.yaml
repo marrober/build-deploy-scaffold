@@ -162,7 +162,7 @@ spec:
       name: Log message
       action: debug:log
       input: 
-        message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }} source_repo_name : ${{ parameters.source_code_repo.repo_name }} source_repo.owner : ${{         repoUrl: "${{ parameters.source_code_repo.host }}?repo=${{ parameters.source_code_repo.repo_name }}&owner=${{ parameters.source_code_repo.owner }}'
+        message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }}, source_repo_owner : ${{ parameters.source_code_repo.repo_owner }} source_repo_name : ${{ parameters.source_code_repo.repo_name }} '
         listWorkspace: true
     - id: template
       name: Fetch Skeleton + Template
