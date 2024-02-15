@@ -44,12 +44,12 @@ spec:
                 allowedHosts:
                   - github.com
                   - gitlab.com
-            cd_git_username:
+            git_username:
               title: Username for source code repo
               type: string
               description: The username for the source code repository
               default: marrober
-            cd_git_email_address:
+            git_email_address:
               title: Email address for source code repo
               type: string
               description: Email address of the user named above
@@ -147,12 +147,12 @@ spec:
                 allowedHosts:
                   - github.com
                   - gitlab.com
-            cd_git_username:
+            git_username:
               title: Username for CD repo
               type: string
               description: The username for the CD repository
               default: marrober
-            cd_git_email_address:
+            git_email_address:
               title: Email address for CD repo
               type: string
               description: Email address of the user named above
@@ -162,7 +162,7 @@ spec:
       name: Log message
       action: debug:log
       input: 
-        message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_repo.host }} source_repo_name : ${{ parameters.source_repo.repo_name }} source_repo.owner : ${{ parameters.source_repo.owner}}'
+        message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }} source_repo_name : ${{ parameters.source_code_repo.repo_name }} source_repo.owner : ${{         repoUrl: "${{ parameters.source_code_repo.host }}?repo=${{ parameters.source_code_repo.repo_name }}&owner=${{ parameters.source_code_repo.owner }}'
         listWorkspace: true
     - id: template
       name: Fetch Skeleton + Template
@@ -176,13 +176,13 @@ spec:
           description: ${{ parameters.description }}
           owner: ${{ user.entity.metadata.name }}
           host: ${{ parameters.source_code_repo.host }}
-          destination: ${{ parameters.source_code_repo.owner }}/${{ parameters.application_name }}
+          destination: ${{ parameters.source_code_repo.owner }}/${{ parameters.source_code_repo.repo_name }}
 
     - id: publish-scm
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: "${{ parameters.source_code_repo.host }}?repo=${{ parameters.source_code_repo.repo_name }}&owner=${{ parameters.source_code_repo.owner}}"
+        repoUrl: "${{ parameters.source_code_repo.host }}?repo=${{ parameters.source_code_repo.repo_name }}&owner=${{ parameters.source_code_repo.owner }}"
         repoVisibility: public
 
     - id: register
