@@ -27,6 +27,7 @@ spec:
           description: Unique name of the application
           pattern: '^[A-Za-z0-9_]*$'
           maxLength: 20
+          default: Pacman_1
         description:
           title: Description
           type: string
@@ -52,10 +53,12 @@ spec:
               title: Repository owner
               type: string
               description: The SCM host organisation / group
+              default: marrober
             repo-name:
               title: Repository name
               type: string
               description: Repository name 
+              default: pacman
     - title: Provide information for the development cluster
       required:
         - cluster-name
@@ -79,11 +82,13 @@ spec:
             - 'sandy'
             - 'skylake'
             - 'whiskylake'
+          default: skylake
         smee-io-identifier:
           title: SMEE.IO Identifier
           type: string
           description: The identifier for the SMEE.IO proxy service used to enable webhooks to reach into demolab.
           ui:field: EntityNamePicker
+          default: vSantlzgFXh7ddOf
     - title: Provide Image Registry Information
       required:
         - image_registry
@@ -94,6 +99,7 @@ spec:
           enum:
             - Openshift
             - Quay
+          default: OpenShift
       dependencies:
         image_registry:
           oneOf:
@@ -150,24 +156,25 @@ spec:
               title: Username for CD repo
               type: string
               description: The username for the CD repository
+              default: marrober
             cd-git-email-address:
               title: Email address for CD repo
               type: string
               description: Email address of the user named above
+              default: marrober@redhat.com
   steps:
     - id: log-message
       name: Log message
       action: debug:log
       input: 
-        # message: 'Parameters -> Application name : ${{ parameters.application-name }}'
-        message: 'Parameters -> component_id : ${{ parameters.component_id }}''
+        message: 'Parameters -> Application name : ${{ parameters.application-name }}, component_id : ${{ parameters.component_id }} source-repo-host : ${{ parameters.source-repo.host }} source-repo.name : ${{ parameters.source-code.repo-name }} source-repo.owner : ${{ parameters.source-repo.owner}}'
         listWorkspace: true
     - id: publish-scm
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: ${{ parameters.source-repo.host }}?repo=${{ parameters.source-code.repo-name }}&owner=${{ parameters.source-repo.owner}}.git
-        repoVisibility: private
+        repoUrl: "${{ parameters.source-repo.host }}?repo=${{ parameters.source-code.repo-name }}&owner=${{ parameters.source-repo.owner}}"
+        repoVisibility: public
 
     - id: register
       name: Register
