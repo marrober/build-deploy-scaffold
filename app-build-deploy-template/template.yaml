@@ -58,6 +58,7 @@ spec:
               title: Github authentication token
               type: string
               ui:field: Secret
+              description: A Githuv authentication token to be used to create repositories.
     - title: Provide information for the development cluster
       required:
         - cluster_name
