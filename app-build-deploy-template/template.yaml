@@ -190,7 +190,7 @@ spec:
           description: ${{ parameters.description }}
           owner: ${{ user.entity.metadata.name }}
           host: ${{ parameters.source_code_repo.host }}
-          destination: ${{ parameters.source_code_repo.owner }}/${{ parameters.source_code_repo.repo_name }}
+          destination: ${{ parameters.source_code_repo.host }}/${{ parameters.source_code_repo.owner }}/${{ parameters.application_name }}
 
     - id: publish_scm
       name: Publish-scm
