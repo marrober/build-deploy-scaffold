@@ -8,7 +8,7 @@ metadata:
   annotations:
     gitlab.com/project-slug: ${{values.destination}}
   tags:
-    - rhone
+    - mroberts
 spec:
   type: service
   lifecycle: production
