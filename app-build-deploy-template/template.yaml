@@ -58,7 +58,7 @@ spec:
               title: Github authentication token
               type: string
               ui:field: Secret
-              description: A Githuv authentication token to be used to create repositories.
+              description: A Github authentication token to be used to create repositories.
     - title: Provide information for the development cluster
       required:
         - cluster_name
@@ -189,7 +189,7 @@ spec:
       input:
         repoUrl: '"${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.source_code_repo.repo_name }}"'
         repoVisibility: public
-        token: ${{ parameters.source_code_repo.token }}
+        token: ${{ secrets.source_code_repo.token }}
 
     - id: register
       name: Register
