@@ -57,7 +57,6 @@ spec:
             token: 
               title: Github authentication token
               type: string
-              ui:field: Secret
               description: A Github authentication token to be used to create repositories.
     - title: Provide information for the development cluster
       required:
@@ -187,7 +186,7 @@ spec:
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: '"${{ parameters.source_code_repo.host }}/${{ parameters.source_code_repo.owner }}/${{ parameters.source_code_repo.repo_name }}"'
+        repoUrl: '${{ parameters.source_code_repo.host }}/${{ parameters.source_code_repo.owner }}/${{ parameters.source_code_repo.repo_name }}'
         repoVisibility: public
         token: ${{ secrets.source_code_repo.token }}
 
