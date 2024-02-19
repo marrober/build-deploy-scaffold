@@ -39,11 +39,16 @@ spec:
             host:
               title: Repo Host
               type: string
-              ui:field: RepoUrlPicker
-              ui:options:
-                allowedHosts:
+              description: The SCM host
+              enum:
                   - github.com
                   - gitlab.com
+              default: git
+            owner:
+              title: Repo Owner
+              type: string
+              description: Your SCM host organization/group
+              default: marrober
             git_username:
               title: Username for source code repo
               type: string
@@ -146,11 +151,16 @@ spec:
             host:
               title: Repo Host
               type: string
-              ui:field: RepoUrlPicker
-              ui:options:
-                allowedHosts:
+              description: The SCM host
+              enum:
                   - github.com
                   - gitlab.com
+              default: git
+            owner:
+              title: Repo Owner
+              type: string
+              description: Your SCM host organization/group
+              default: marrober
             git_username:
               title: Username for CD repo
               type: string
@@ -166,7 +176,7 @@ spec:
       name: Log message
       action: debug:log
       input: 
-        message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }}, source_repo_owner : ${{ parameters.source_code_repo.repo_owner }} source_repo_name : ${{ parameters.source_code_repo.repo_name }} '
+        message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }} '
         listWorkspace: true
     - id: template
       name: Fetch Skeleton + Template
@@ -186,9 +196,16 @@ spec:
       name: Publish-scm
       action: publish:github
       input:
-        repoUrl: '${{ parameters.source_code_repo.host }}/${{ parameters.source_code_repo.owner }}/${{ parameters.source_code_repo.repo_name }}'
+        repoUrl: '${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.source_code_repo.application_name}}-scm'
         repoVisibility: public
         token: ${{ secrets.source_code_repo.token }}
+
+    - id: log-message-2
+      name: Log message
+      action: debug:log
+      input: 
+        message: 'SCM repo URL ${{ steps.publish-scm.output.repoContentsUrl }}'
+        listWorkspace: true
 
     - id: register
       name: Register
@@ -229,7 +246,7 @@ spec:
       name: Publishing to Resource Repository
       action: publish:gitlab
       input:
-        repoUrl: "${{ parameters.gitops_repo.host }}?owner=${{ parameters.gitops_repo.owner }}&gitops_repo=${{parameters.application_name }}-gitops"
+        repoUrl: "${{ parameters.gitops_repo.host }}?owner=${{ parameters.gitops_repo.owner }}&repo=${{parameters.application_name }}-gitops"
         title: gitops resources for ${{ parameters.application_name }}
         description: gitops resources for ${{ parameters.application_name }}
         sourcePath: ./tenant-gitops
