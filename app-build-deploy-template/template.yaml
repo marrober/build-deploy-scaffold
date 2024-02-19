@@ -212,7 +212,7 @@ spec:
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish_scm.output.repoContentsUrl }}
-        catalogInfoPath: "/skeleton/catalog-info.yaml"
+        catalogInfoPath: "/catalog-info.yaml"
 
     - id: template-gitops-deployment
       name: Generating Deployment Resources
