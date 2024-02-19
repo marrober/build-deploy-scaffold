@@ -9,7 +9,7 @@ metadata:
     - tekton
     - argocd
 spec:
-  owner: rhdh
+  owner: marrober
   type: service
   parameters:
     - title: Provide information for the application
