@@ -8,7 +8,7 @@ metadata:
   annotations:
     gitlab.com/project: ${{ values.destination }}
   tags:
-    - 
+    - mr_test
 spec:
   type: service
   lifecycle: production
