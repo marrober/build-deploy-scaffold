@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
-  name: {{ values.application_name }}-ci-pipeline-listener-interceptor
+  name: ${{ values.application_name }}-ci-pipeline-listener-interceptor
 spec:
   serviceAccountName: pipeline
   triggers:
@@ -25,6 +25,6 @@ spec:
           - key: branch
             expression: "body.ref.split('/')[2]"
     bindings:
-      - ref: {{ values.application_name }}-ci-binding
+      - ref: ${{ values.application_name }}-ci-binding
     template:
-      ref: {{ values.application_name }}-ci-template
+      ref: ${{ values.application_name }}-ci-template

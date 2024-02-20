@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
-  name: {{ values.application_name }}-ci-template
+  name: ${{ values.application_name }}-ci-template
 spec:
   params:
   - name: gitrepository.url
@@ -11,11 +11,11 @@ spec:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
     metadata:
-      generateName: {{ values.application_name }}-ci-pipeline-tr-
+      generateName: ${{ values.application_name }}-ci-pipeline-tr-
     spec:
       serviceAccountName: pipeline
       pipelineRef:
-        name: {{ values.application_name }}-pipeline
+        name: ${{ values.application_name }}-pipeline
       params:
         - name: git-url
           value: $(tt.params.gitrepository.url)
@@ -48,11 +48,11 @@ spec:
         - name: cd-git-url
           value: marrober/{{ values.application_name }}
         - name: cd-git-repo-name
-          value: {{ values.application_name }}
+          value: ${{ values.application_name }}
         - name: cd-git-repo-path-to-content-development
           value: cd/env/01-dev
         - name: argocd-application-file
-          value: {{ values.application_name }}-development.yaml
+          value: ${{ values.application_name }}-development.yaml
         - name: cd-git-commit-comment-dev
           value: "Update from triggered ci process - dev"
         - name: cd-git-user-name

@@ -5,7 +5,7 @@ metadata:
     pipeline.openshift.io/runtime: nodejs
     pipeline.openshift.io/runtime-version: 16-ubi8
     pipeline.openshift.io/type: kubernetes
-  name: {{ values.application_name }}-pipeline
+  name: ${{ values.application_name }}-pipeline
 spec:
   params:
     ## repository parameters

@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ values.application_name }}-development
+  name: ${{ values.application_name }}-development
   namespace: openshift-gitops
 spec:
-  project: {{ values.application_name }}
+  project: ${{ values.application_name }}
   destination:
-    namespace: {{ values.application_name }}-development
+    namespace: ${{ values.application_name }}-development
     server: https://kubernetes.default.svc
   ignoreDifferences:
     - group: argoproj.io
@@ -30,7 +30,7 @@ spec:
         - /spec/host
       kind: Route
   source:
-    chart: {{ values.helm-chart-name }}
+    chart: ${{ values.helm-chart-name }}
     targetRevision: 0.1.2
     repoURL: https://marrober.github.io/helm-charts/
     helm:

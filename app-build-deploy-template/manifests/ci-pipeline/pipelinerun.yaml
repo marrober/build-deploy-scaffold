@@ -7,8 +7,8 @@ metadata:
     pipeline.openshift.io/runtime: nodejs
     pipeline.openshift.io/runtime-version: 16-ubi8
     pipeline.openshift.io/type: kubernetes
-    tekton.dev/pipeline: {{ values.application_name }}-pipeline
-  generateName: {{ values.application_name }}-pr-
+    tekton.dev/pipeline: ${{ values.application_name }}-pipeline
+  generateName: ${{ values.application_name }}-pr-
 spec:
   params:
     ## repository parameters
@@ -38,11 +38,11 @@ spec:
   - name: cd-git-url
     value: marrober/{{ values.application_name }}
   - name: cd-git-repo-name
-    value: {{ values.application_name }}
+    value: ${{ values.application_name }}
   - name: cd-git-repo-path-to-content-development
     value: cd/env/01-dev
   - name: argocd-application-file
-    value: {{ values.application_name }}-development.yaml
+    value: ${{ values.application_name }}-development.yaml
   - name: cd-git-commit-comment-dev
     value: "Update from ci process - dev"
   - name: cd-git-user-name
