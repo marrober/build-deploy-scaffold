@@ -144,6 +144,13 @@ spec:
       required:
         - gitops_repo
       properties:
+        gitops_project_name:
+          title: GitOps project name
+          type: string
+          description: Unique name of the gitops project
+          pattern: '^[a-z0-9-]*$'
+          maxLength: 20
+          default: pacman-1
         gitops_repo:
           title: Repository Location
           type: object
@@ -273,7 +280,7 @@ spec:
       action: argocd:create-resources
       input:
         appName: ${{ parameters.application_name }}-boot
-        projectName: ${{ parameters.application_name }}
+        projectName: ${{ parameters.gitops_repo.gitops_project_name }}
         argoInstance: main
         namespace: janus-argocd
         repoUrl: https://${{ parameters.gitops_repo.host }}/${{ parameters.gitops_repo.owner }}/${{ parameters.application_name }}-gitops.git
