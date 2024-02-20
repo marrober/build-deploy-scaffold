@@ -220,7 +220,7 @@ spec:
       input:
         url: ./manifests
         copyWithoutTemplating: 
-          - tasks/*
+          - ci-pipeline/tasks/*
         values:
           application-name: ${{ parameters.application_name }}
           cd_git_username: ${{ parameters.cd_git_username }}
