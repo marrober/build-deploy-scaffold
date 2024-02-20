@@ -219,7 +219,8 @@ spec:
       action: fetch:template
       input:
         url: ./manifests
-        copyWithoutTemplating: []
+        copyWithoutTemplating: 
+          - tasks/*
         values:
           application-name: ${{ parameters.application_name }}
           cd_git_username: ${{ parameters.cd_git_username }}
