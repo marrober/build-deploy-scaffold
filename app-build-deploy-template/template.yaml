@@ -176,7 +176,7 @@ spec:
       name: Log message
       action: debug:log
       input: 
-        message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }} '
+        message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }}, owner : ${{ user.entity.metadata.name }}, owner-2 : ${{ user }} '
         listWorkspace: true
     - id: template
       name: Fetch Skeleton + Template
