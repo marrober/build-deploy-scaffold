@@ -206,13 +206,20 @@ spec:
         message: 'SCM repo URL (input) ${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
         listWorkspace: true
 
+    - id: log-message-2
+      name: Log message
+      action: debug:log
+      input: 
+        message: 'Token : ${{ parameters.source_code_repo.token }}'
+        listWorkspace: true
+
     - id: publish_scm
       name: Publish source code resources
       action: publish:github
       input:
         repoUrl: '${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
         repoVisibility: public
-        token: ${{ secrets.source_code_repo.token }}
+        token: ${{ parameters.source_code_repo.token }}
 
     - id: log-message-3
       name: Log message
@@ -273,7 +280,7 @@ spec:
         description: gitops resources for ${{ parameters.application_name }}
         sourcePath: ./tenant-gitops
         repoVisibility: public
-        token: ${{ secrets.source_code_repo.token }}
+        token: ${{ parameters.source_code_repo.token }}
 
     - id: create-argocd-resources
       name: Create ArgoCD resources
