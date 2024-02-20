@@ -226,8 +226,8 @@ spec:
           cd_git_email_address: ${{ parameters.cd_git_email_address }}
           smee_io_identifier: ${{ parameters.smee_io_identifier }}
           destination: https://${{ parameters.gitops_repo.host }}/${{ parameters.gitops_repo.owner }}/${{ parameters.application_name }}-gitops.git
-          source_repository: https://${{ parameters.source_repo }}
-          repository_name: ${{parameters.application_name}}
+          source_repository: https://${{ parameters.source_repo }}/${{ parameters.source_code_repo.owner }}/${{ parameters.application_name}}-scm.git
+          repository_name: ${{ parameters.application_name }}
           git_owner: ${{ parameters.gitops_repo.owner }}
           cluster: ${{ values.cluster_name }}
           namespace: ${{ parameters.application_name }}-dev
@@ -238,7 +238,7 @@ spec:
           image_tag: ${{ parameters.image_tag }}
           port: 8080
           repository_host: ${{ parameters.gitops_repo.host }}
-          deployment_name: ${{ parameters.application-name }}
+          deployment_name: ${{ parameters.application_name }}
           user: ${{ user.entity.metadata.name }}
         targetPath: ./tenant-gitops
 
@@ -251,6 +251,7 @@ spec:
         description: gitops resources for ${{ parameters.application_name }}
         sourcePath: ./tenant-gitops
         repoVisibility: public
+        token: ${{ secrets.source_code_repo.token }}
 
     - id: create-argocd-resources
       name: Create ArgoCD Resources
