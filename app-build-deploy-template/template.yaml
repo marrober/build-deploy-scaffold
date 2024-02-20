@@ -20,9 +20,9 @@ spec:
           title: Application name
           type: string
           description: Unique name of the application
-          pattern: '^[a-z0-9_]*$'
+          pattern: '^[a-z0-9]*$'
           maxLength: 20
-          default: pacman_1
+          default: pacman1
         description:
           title: Description
           type: string
