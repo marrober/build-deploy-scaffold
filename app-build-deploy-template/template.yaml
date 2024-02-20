@@ -273,7 +273,7 @@ spec:
       action: argocd:create-resources
       input:
         appName: ${{ parameters.application_name }}
-        project: default
+        projectName: default
         argoInstance: main
         namespace: dh_argocd
         repoUrl: https://${{ parameters.gitops_repo.host }}/${{ parameters.gitops_repo.owner }}/${{ parameters.application_name }}-gitops.git
