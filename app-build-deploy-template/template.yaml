@@ -200,14 +200,14 @@ spec:
           destination: ${{ parameters.source_code_repo.host }}/${{ parameters.source_code_repo.owner }}/${{ parameters.application_name }}
 
     - id: log-message-2
-      name: Log message
+      name: Log message 2
       action: debug:log
       input: 
         message: 'SCM repo URL (input) ${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
         listWorkspace: true
 
-    - id: log-message-2
-      name: Log message
+    - id: log-message-2-a
+      name: Log message 3
       action: debug:log
       input: 
         message: 'Token : ${{ parameters.source_code_repo.token }}'
@@ -222,7 +222,7 @@ spec:
         token: ${{ parameters.source_code_repo.token }}
 
     - id: log-message-3
-      name: Log message
+      name: Log message 4
       action: debug:log
       input: 
         message: 'SCM repo URL ${{ steps.publish_scm.output.repoContentsUrl }}'
