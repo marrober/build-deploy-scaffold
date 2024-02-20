@@ -9,4 +9,4 @@ spec:
     targetPort: http-listener
   to:
     kind: Service
-    name: el-{{ values.application_name }}-ci-pipeline-listener-interceptor
+    name: el-${{ values.application_name }}-ci-pipeline-listener-interceptor

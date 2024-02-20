@@ -24,7 +24,7 @@ spec:
         - name: branch
           value: $(tt.params.branch)
         - name: IMAGE_NAME
-          value: image-registry.openshift-image-registry.svc:5000/$(context.taskRun.namespace)/{{ values.application_name }}
+          value: image-registry.openshift-image-registry.svc:5000/$(context.taskRun.namespace)/${{ values.application_name }}
         - name: PATH_CONTEXT
           value: src
         - name: STORAGE_DRIVER
@@ -46,7 +46,7 @@ spec:
         - name: repo_type
           value: github.com
         - name: cd-git-url
-          value: marrober/{{ values.application_name }}
+          value: marrober/${{ values.application_name }}
         - name: cd-git-repo-name
           value: ${{ values.application_name }}
         - name: cd-git-repo-path-to-content-development
@@ -56,9 +56,9 @@ spec:
         - name: cd-git-commit-comment-dev
           value: "Update from triggered ci process - dev"
         - name: cd-git-user-name
-          value: "{{ values.cd-git-username }}"
+          value: "${{ values.cd-git-username }}"
         - name: cd-git-user-email
-          value: "{{ values.cd-git-email-address }}"
+          value: "${{ values.cd-git-email-address }}"
       workspaces:
       - name: files
         volumeClaimTemplate:
