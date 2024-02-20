@@ -229,7 +229,7 @@ spec:
         copyWithoutTemplating: 
           - ci-pipeline/tasks/*
         values:
-          application-name: ${{ parameters.application_name }}
+          application_name: ${{ parameters.application_name }}
           cd_git_username: ${{ parameters.cd_git_username }}
           cd_git_email_address: ${{ parameters.cd_git_email_address }}
           smee_io_identifier: ${{ parameters.smee_io_identifier }}

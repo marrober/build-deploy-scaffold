@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ values.application-name }}-development
+  name: {{ values.application_name }}-development
   namespace: openshift-gitops
 spec:
-  project: {{ values.application-name }}
+  project: {{ values.application_name }}
   destination:
-    namespace: {{ values.application-name }}-development
+    namespace: {{ values.application_name }}-development
     server: https://kubernetes.default.svc
   ignoreDifferences:
     - group: argoproj.io

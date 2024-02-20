@@ -2,11 +2,11 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   labels:
-    eventlistener: {{ values.application-name }}-ci-pipeline-listener-interceptor
-  name: {{ values.application-name }}-ci-listener-el
+    eventlistener: {{ values.application_name }}-ci-pipeline-listener-interceptor
+  name: {{ values.application_name }}-ci-listener-el
 spec:
   port:
     targetPort: http-listener
   to:
     kind: Service
-    name: el-{{ values.application-name }}-ci-pipeline-listener-interceptor
+    name: el-{{ values.application_name }}-ci-pipeline-listener-interceptor

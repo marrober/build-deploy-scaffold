@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ values.application-name }}-ci
+  name: {{ values.application_name }}-ci
   namespace: openshift-gitops
 spec:
-  project: {{ values.application-name }}
+  project: {{ values.application_name }}
   destination:
-    namespace: {{ values.application-name }}-ci
+    namespace: {{ values.application_name }}-ci
     server: https://kubernetes.default.svc
   ignoreDifferences:
   - group: argoproj.io
@@ -32,7 +32,7 @@ spec:
   source:
     path: ci-pipeline
     targetRevision: main
-    repoURL: https://github.com/marrober/{{ values.application-name }}.git
+    repoURL: https://github.com/marrober/{{ values.application_name }}.git
   syncPolicy:
     automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).

@@ -7,8 +7,8 @@ metadata:
     pipeline.openshift.io/runtime: nodejs
     pipeline.openshift.io/runtime-version: 16-ubi8
     pipeline.openshift.io/type: kubernetes
-    tekton.dev/pipeline: {{ values.application-name }}-pipeline
-  generateName: {{ values.application-name }}-pr-
+    tekton.dev/pipeline: {{ values.application_name }}-pipeline
+  generateName: {{ values.application_name }}-pr-
 spec:
   params:
     ## repository parameters
@@ -18,7 +18,7 @@ spec:
     value: ""
     ## Image build parameters
   - name: IMAGE_NAME
-    value: image-registry.openshift-image-registry.svc:5000/$(context.taskRun.namespace)/{{ values.application-name }}
+    value: image-registry.openshift-image-registry.svc:5000/$(context.taskRun.namespace)/{{ values.application_name }}
   - name: PATH_CONTEXT
     value: src
   - name: STORAGE_DRIVER
@@ -36,13 +36,13 @@ spec:
   - name: repo_type
     value: github.com
   - name: cd-git-url
-    value: marrober/{{ values.application-name }}
+    value: marrober/{{ values.application_name }}
   - name: cd-git-repo-name
-    value: {{ values.application-name }}
+    value: {{ values.application_name }}
   - name: cd-git-repo-path-to-content-development
     value: cd/env/01-dev
   - name: argocd-application-file
-    value: {{ values.application-name }}-development.yaml
+    value: {{ values.application_name }}-development.yaml
   - name: cd-git-commit-comment-dev
     value: "Update from ci process - dev"
   - name: cd-git-user-name
