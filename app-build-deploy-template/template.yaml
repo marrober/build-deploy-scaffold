@@ -259,7 +259,7 @@ spec:
 
     - id: publish_gitops
       name: Publishing GitOps resources
-      action: publish:gitlab
+      action: publish:github
       input:
         repoUrl: '${{ parameters.gitops_repo.host }}?owner=${{ parameters.gitops_repo.owner }}&repo=${{ parameters.application_name }}-gitops'
         title: gitops resources for ${{ parameters.application_name }}
