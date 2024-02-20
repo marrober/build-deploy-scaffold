@@ -188,7 +188,7 @@ spec:
         values:
           application_name: ${{ parameters.application_name }}
           description: ${{ parameters.description }}
-          owner: ${{ user.entity.metadata.name }}
+          owner: ${{ parameters.source_code_repo.owner }}
           host: ${{ parameters.source_code_repo.host }}
           destination: ${{ parameters.source_code_repo.host }}/${{ parameters.source_code_repo.owner }}/${{ parameters.application_name }}
 
