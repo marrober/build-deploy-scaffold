@@ -179,7 +179,7 @@ spec:
         message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }}, owner : ${{ user.entity.metadata.name }}, owner-2 : ${{ user }} '
         listWorkspace: true
     - id: template
-      name: Fetch Skeleton + Template
+      name: Fetch skeleton & template
       action: fetch:template
       input:
         url: ./skeleton
@@ -192,15 +192,22 @@ spec:
           host: ${{ parameters.source_code_repo.host }}
           destination: ${{ parameters.source_code_repo.host }}/${{ parameters.source_code_repo.owner }}/${{ parameters.application_name }}
 
+    - id: log-message-2
+      name: Log message
+      action: debug:log
+      input: 
+        message: 'SCM repo URL (input) ${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
+        listWorkspace: true
+
     - id: publish_scm
-      name: Publish-scm
+      name: Publish source code resources
       action: publish:github
       input:
         repoUrl: '${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
         repoVisibility: public
         token: ${{ secrets.source_code_repo.token }}
 
-    - id: log-message-2
+    - id: log-message-3
       name: Log message
       action: debug:log
       input: 
@@ -208,14 +215,14 @@ spec:
         listWorkspace: true
 
     - id: register
-      name: Register
+      name: Register SCM content
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish_scm.output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
 
     - id: template-gitops-deployment
-      name: Generating Deployment Resources
+      name: Generating deployment resources
       action: fetch:template
       input:
         url: ./manifests
@@ -243,11 +250,18 @@ spec:
           user: ${{ user.entity.metadata.name }}
         targetPath: ./tenant-gitops
 
+    - id: log-message-4
+      name: Log message
+      action: debug:log
+      input: 
+        message: 'Gitops repo URL (input) ${{ parameters.gitops_repo.host }}?owner=${{ parameters.gitops_repo.owner }}&repo=${{ parameters.application_name }}-gitops'
+        listWorkspace: true
+
     - id: publish_gitops
-      name: Publishing to Resource Repository
+      name: Publishing GitOps resources
       action: publish:gitlab
       input:
-        repoUrl: "${{ parameters.gitops_repo.host }}?owner=${{ parameters.gitops_repo.owner }}&repo=${{ parameters.application_name }}-gitops"
+        repoUrl: '${{ parameters.gitops_repo.host }}?owner=${{ parameters.gitops_repo.owner }}&repo=${{ parameters.application_name }}-gitops'
         title: gitops resources for ${{ parameters.application_name }}
         description: gitops resources for ${{ parameters.application_name }}
         sourcePath: ./tenant-gitops
@@ -255,7 +269,7 @@ spec:
         token: ${{ secrets.source_code_repo.token }}
 
     - id: create-argocd-resources
-      name: Create ArgoCD Resources
+      name: Create ArgoCD resources
       action: argocd:create-resources
       input:
         appName: ${{ parameters.application_name }}-bootstrap
