@@ -1,4 +1,4 @@
-# {{ values.application_name }}
+# ${{ values.application_name }}
 
-Source code for the {{ values.application_name }} project.
+Source code for the ${{ values.application_name }} project.
 
