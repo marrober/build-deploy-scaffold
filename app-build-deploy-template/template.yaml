@@ -180,48 +180,49 @@ spec:
               default: marrober@redhat.com
     - title: Application ownership and responsibilities
       required:
-        - gitops_repo
+        - application_owner
       properties:
-        gitops_project_name:
-          title: GitOps project name
+        application_owner:
+          title: Application owner
           type: string
-          description: Unique name of the gitops project
-          pattern: '^[a-z0-9-]*$'
+          description: The responsible owner of the application
+          pattern: '^[A-Z][A-Za-z ]*$'
           maxLength: 20
-          default: pacman-1
-        gitops_repo:
-          title: Repository Location
-          type: object
-          properties:
-            host:
-              title: Repo Host
-              type: string
-              description: The SCM host
-              enum:
-                  - github.com
-                  - gitlab.com
-              default: git
-            owner:
-              title: Repo Owner
-              type: string
-              description: Your SCM host organization/group
-              default: marrober
-            git_username:
-              title: Username for CD repo
-              type: string
-              description: The username for the CD repository
-              default: marrober
-            git_email_address:
-              title: Email address for CD repo
-              type: string
-              description: Email address of the user named above
-              default: marrober@redhat.com
+          default: Mark Roberts
   steps:
-    - id: log-message
+    - id: log-message-1
       name: Application and repo details
       action: debug:log
       input: 
         message: 'Parameters -> Application name : ${{ parameters.application_name }}, source_repo_host : ${{ parameters.source_code_repo.host }}, owner : ${{ user.entity.metadata.name }}, owner-2 : ${{ user }} '
+        listWorkspace: false
+
+    - id: log-message-2
+      name: SCN Repo URL
+      action: debug:log
+      input: 
+        message: 'SCM repo URL (input) ${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
+        listWorkspace: false
+
+    - id: log-message-3
+      name: Token
+      action: debug:log
+      input: 
+        message: 'Token : ${{ parameters.source_code_repo.token }}'
+        listWorkspace: false
+
+    - id: log-message-4
+      name: Gitops project name
+      action: debug:log
+      input: 
+        message: 'gitops project name : ${{ parameters.gitops_repo.gitops_project_name }}'
+        listWorkspace: false
+
+    - id: log-message-5
+      name: SCM repo URL
+      action: debug:log
+      input: 
+        message: 'SCM repo URL ${{ steps.publish_scm.output.repoContentsUrl }}'
         listWorkspace: false
 
     - id: template
@@ -238,27 +239,6 @@ spec:
           host: ${{ parameters.source_code_repo.host }}
           destination: ${{ parameters.source_code_repo.host }}/${{ parameters.source_code_repo.owner }}/${{ parameters.application_name }}
 
-    - id: log-message-2
-      name: SCN Repo URL
-      action: debug:log
-      input: 
-        message: 'SCM repo URL (input) ${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
-        listWorkspace: false
-
-    - id: log-message-2-a
-      name: Token
-      action: debug:log
-      input: 
-        message: 'Token : ${{ parameters.source_code_repo.token }}'
-        listWorkspace: false
-
-    - id: log-message-2-b
-      name: Gitops project name
-      action: debug:log
-      input: 
-        message: 'gitops project name : ${{ parameters.gitops_repo.gitops_project_name }}'
-        listWorkspace: false
-
     - id: publish_scm
       name: Publish source code resources
       action: publish:github
@@ -266,13 +246,6 @@ spec:
         repoUrl: '${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
         repoVisibility: public
         token: ${{ parameters.source_code_repo.token }}
-
-    - id: log-message-3
-      name: Log message 4
-      action: debug:log
-      input: 
-        message: 'SCM repo URL ${{ steps.publish_scm.output.repoContentsUrl }}'
-        listWorkspace: false
 
     - id: register
       name: Register SCM content
