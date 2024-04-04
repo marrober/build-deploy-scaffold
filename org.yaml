@@ -1,0 +1,33 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: admin
+  description: Red Hat Developer Hub admin team
+spec:
+  type: team
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: users
+  description: Red Hat Developer Hub user team
+spec:
+  type: team
+  parent: admin
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: marrober
+spec:
+  memberOf: [admin]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: lromeroc
+spec:
+  memberOf: [users]
+
