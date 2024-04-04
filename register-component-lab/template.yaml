@@ -5,10 +5,9 @@ metadata:
   title: Onboard your component to RHDH-2
   description: Create and register a new component to RHDH Catalog
   tags:
-    - bonus
-    - rhone
+    - java
 spec:
-  owner: rhdh
+  owner: marrober
   type: service
   parameters:
     - title: Provide new component details
