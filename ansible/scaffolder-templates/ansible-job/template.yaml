@@ -29,6 +29,10 @@ spec:
         repoName:
           title: Repository Name
           type: string
+        repoToken: 
+          title: GitHub auth token
+          type: string
+          description: GitHub authentication token
         system:
           title: System
           type: string
@@ -101,6 +105,7 @@ spec:
         description: ${{ parameters.name }}-job
         repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}
         branchName: ${{ parameters.name }}-job
+        token: ${{ parameters.repoToken }}
 
     - id: register
       name: Registering the Catalog Info Component
