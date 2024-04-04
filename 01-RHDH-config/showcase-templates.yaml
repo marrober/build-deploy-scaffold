@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
-  name: project-dance-templates
-  description: A collection of RHDH templates for Project Dance
+  name: project-templates
+  description: A collection of RHDH templates
 spec:
   type: url
   targets:
