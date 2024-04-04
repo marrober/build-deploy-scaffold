@@ -7,3 +7,13 @@ metadata:
     - dev
 spec:
   owner: admin
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: qa
+  tags:
+    - qa
+spec:
+  owner: admin
+
