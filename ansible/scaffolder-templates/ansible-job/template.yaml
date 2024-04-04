@@ -98,14 +98,14 @@ spec:
 
     - id: publish
       name: Publishing to Source Code Repository
-      action: publish:github:pull-request
+      action: publish:github
       input:
         allowedHosts: ['github.com']
         title: ${{ parameters.name }}-job
         description: ${{ parameters.name }}-job
         repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}
-        branchName: ${{ parameters.name }}-job
         token: ${{ parameters.repoToken }}
+        repoVisibility: public
 
     - id: register
       name: Registering the Catalog Info Component
