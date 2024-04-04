@@ -88,7 +88,7 @@ spec:
       name: Generating the Catalog Info Component
       action: fetch:template
       input:
-        url: ../../scaffolder-skeletons/catalog-info-skeleton/
+        url: ./skeleton
         values:
           githubOrg: ${{ parameters.githubOrg }}
           repoName: ${{ parameters.repoName }}
