@@ -26,34 +26,34 @@ spec:
             - Singapore
             - United Kingdom
             - United States
-        dependencies:
-          hosting_location:
-            oneOf:
-              - properties:
-                  hosting_location:
-                    enum: 
-                      - United Kingdom
-                  provider:
-                    title: Provider type
-                    type: string
-                    description: Provider type
-                    default: CMO
-                    enum:
-                      - CMO
-                      - Azure
-              - properties:
-                  hosting_location:
-                    enum: 
-                      - Germany
-                      - Singapore
-                      - United States
-                  provider:
-                    title: Provider type
-                    type: string
-                    description: Provider type
-                    default: CMO
-                    enum:
-                      - CMO
+      dependencies:
+        hosting_location:
+          oneOf:
+            - properties:
+                hosting_location:
+                  enum: 
+                    - United Kingdom
+                provider:
+                  title: Provider type
+                  type: string
+                  description: Provider type
+                  default: CMO
+                  enum:
+                    - CMO
+                    - Azure
+            - properties:
+                hosting_location:
+                  enum: 
+                    - Germany
+                    - Singapore
+                    - United States
+                provider:
+                  title: Provider type
+                  type: string
+                  description: Provider type
+                  default: CMO
+                  enum:
+                    - CMO
         environment_type:
           title: Environment type
           type: string
