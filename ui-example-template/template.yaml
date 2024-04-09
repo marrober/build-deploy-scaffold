@@ -16,16 +16,6 @@ spec:
         - environment_type
         - environment_name
       properties:
-        hosting_location:
-          title: Hosting location
-          type: string
-          default: United Kingdom
-          description: Where would you like it hosted ?
-          enum:
-            - Germany
-            - Singapore
-            - United Kingdom
-            - United States
         environment_type:
           title: Environment type
           type: string
@@ -45,6 +35,16 @@ spec:
           title: Description
           type: string
           description: A description of the environment
+        hosting_location:
+          title: Hosting location
+          type: string
+          default: United Kingdom
+          description: Where would you like it hosted ?
+          enum:
+            - Germany
+            - Singapore
+            - United Kingdom
+            - United States
       dependencies:
         hosting_location:
           oneOf:
