@@ -308,17 +308,6 @@ spec:
         repoVisibility: public
         token: ${{ parameters.source_code_repo.token }}
 
-#    - id: create-argocd-resources
-#      name: Create ArgoCD resources
-#      action: argocd:create-resources
-#      input:
-#        appName: ${{ parameters.application_name }}-boot
-#        projectName: ${{ parameters.gitops_project_name }}
-#        argoInstance: main
-#        namespace: janus-argocd
-#        repoUrl: https://${{ parameters.gitops_repo.host }}/${{ parameters.gitops_repo.owner }}/${{ parameters.application_name }}-gitops.git
-#        path: 'argocd/'
-
   output:
     links:
       - title: Source code SCM
