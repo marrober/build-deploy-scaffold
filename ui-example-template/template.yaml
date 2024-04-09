@@ -26,6 +26,25 @@ spec:
             - Singapore
             - United Kingdom
             - United States
+        environment_type:
+          title: Environment type
+          type: string
+          default: INT
+          description: What type of environment is this ?
+          enum:
+            - INT
+            - UAT
+            - PRE-PROD
+            - PROD
+        environment_name:
+          title: Environment name
+          type: string
+          description: Name of the environment
+          pattern: '^[A-Z][A-Za-z0-9_]*$'
+        description:
+          title: Description
+          type: string
+          description: A description of the environment
       dependencies:
         hosting_location:
           oneOf:
@@ -54,25 +73,6 @@ spec:
                   default: CMO
                   enum:
                     - CMO
-        environment_type:
-          title: Environment type
-          type: string
-          default: INT
-          description: What type of environment is this ?
-          enum:
-            - INT
-            - UAT
-            - PRE-PROD
-            - PROD
-        environment_name:
-          title: Environment name
-          type: string
-          description: Name of the environment
-          pattern: '^[A-Z][A-Za-z0-9_]*$'
-        description:
-          title: Description
-          type: string
-          description: A description of the environment
     - title: Repository information
       required:
         - repo
