@@ -1,0 +1,147 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: ui-example-template
+  title: UI example template
+  description: Create and register a new component to RHDH Catalog
+  tags:
+    - java
+spec:
+  owner: marrober
+  type: service
+  parameters:
+    - title: Provisioning new instance
+      required:
+        - hosting_location
+        - environment_type
+        - environment_name
+      properties:
+        hosting_location:
+          title: Hosting location
+          type: string
+          default: United Kingdom
+          description: Where would you like it hosted ?
+          enum:
+            - Germany
+            - Singapore
+            - United Kingdom
+            - United States
+        dependencies:
+          hosting_location:
+            oneOf:
+              - properties:
+                  hosting_location:
+                    enum: 
+                      - United Kingdom
+                  provider:
+                    title: Provider type
+                    type: string
+                    description: Provider type
+                    default: CMO
+                    enum:
+                      - CMO
+                      - Azure
+              - properties:
+                  hosting_location:
+                    enum: 
+                      - Germany
+                      - Singapore
+                      - United States
+                  provider:
+                    title: Provider type
+                    type: string
+                    description: Provider type
+                    default: CMO
+                    enum:
+                      - CMO
+        environment_type:
+          title: Environment type
+          type: string
+          default: INT
+          description: What type of environment is this ?
+          enum:
+            - INT
+            - UAT
+            - PRE-PROD
+            - PROD
+        environment_name:
+          title: Environment name
+          type: string
+          description: Name of the environment
+          pattern: '^[A-Z][A-Za-z0-9_]*$'
+        description:
+          title: Description
+          type: string
+          description: A description of the environment
+    - title: Repository information
+      required:
+        - repo
+      properties:
+        repo:
+          title: Repository Location
+          type: object
+          properties:
+            host:
+              title: Repo Host
+              type: string
+              description: The SCM host
+              enum:
+                  - github.com
+                  - gitlab.com
+                  - bitbucket.com
+              default: github.com
+            owner:
+              title: Repo Owner
+              type: string
+              description: Your SCM host organization/group
+              default: marrober
+            token: 
+              title: Github authentication token
+              type: string
+              description: A Github authentication token to be used to create repositories.
+  steps:
+    - id: log_1
+      name: Log parameters - 1
+      action: debug:log
+      input: 
+        message: 'Parameters -> hosting_location : ${{ parameters.hosting_location }} -> environment_type : ${{ parameters.environment_type }} -> environment_name : ${{ parameters.environment_name }} -> description : ${{ parameters.description }}'
+    - id: log_2
+      name: Log parameters - 2
+      action: debug:log
+      input: 
+        message: 'Parameters -> repo.host : ${{ parameters.repo.host }} -> repo.owner : ${{  parameters.repo.owner }}'        
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        copyWithoutTemplating:
+          - .github/workflows/*
+        values:
+          hosting_location : ${{ parameters.hosting_location }} 
+          environment_type : ${{ parameters.environment_type }}
+          environment_name : ${{ parameters.environment_name }} 
+          description : ${{ parameters.description }}
+    - id: publish
+      name: Publish
+      action: publish:gitlab
+      input:
+        repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{ parameters.environment_name }}"
+        repoVisibility: public
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+  
+  output:
+    links:
+      - title: Content repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open Component in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
+    message-0: 'Parameters -> component_id : ${{ parameters.component_id }}'
+    message-1: 'Parameters -> description  : ${{ parameters.description }}'
