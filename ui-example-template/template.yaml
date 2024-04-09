@@ -12,9 +12,9 @@ spec:
   parameters:
     - title: Provisioning new instance
       required:
-        - hosting_location
         - environment_type
         - environment_name
+        - hosting_location
       properties:
         environment_type:
           title: Environment type
