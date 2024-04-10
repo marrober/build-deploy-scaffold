@@ -60,6 +60,23 @@ spec:
                   enum:
                     - CMO
                     - Azure
+              dependencies:
+                provider:
+                  oneOf:
+                    - properties:
+                        provider:
+                          enum: 
+                          - CMO
+                        data_centre:
+                          title: Data centre
+                          type: string
+                          description: Data centre location
+                          default: London
+                          enum:
+                            - London
+                            - Birmingham
+                            - Manchester
+                            - Glasgow
             - properties:
                 hosting_location:
                   enum: 
