@@ -93,16 +93,12 @@ spec:
                   - github.com
                   - gitlab.com
                   - bitbucket.com
-              default: github.com
+              default: gitlab.com
             owner:
               title: Repo Owner
               type: string
               description: Your SCM host organization/group
               default: marrober
-            token: 
-              title: Github authentication token
-              type: string
-              description: A Github authentication token to be used to create repositories.
   steps:
     - id: log_1
       name: Log parameters - 1
