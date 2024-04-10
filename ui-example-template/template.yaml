@@ -99,6 +99,10 @@ spec:
               type: string
               description: Your SCM host organization/group
               default: marrober
+            token: 
+              title: Git repository authentication token
+              type: string
+              description: An authentication token to be used to create repositories.
   steps:
     - id: log_1
       name: Log parameters - 1
@@ -128,6 +132,7 @@ spec:
       input:
         repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{ parameters.environment_name }}"
         repoVisibility: public
+        token: ${{ parameters.repo.token }}
 
     - id: register
       name: Register
