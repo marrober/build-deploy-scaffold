@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: ui-example-template
-  title: UI example template
+  title: DAP Example
   description: Create and register a new component to RHDH Catalog
   tags:
     - java
