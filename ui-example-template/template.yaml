@@ -38,7 +38,7 @@ spec:
         hosting_location:
           title: Hosting location
           type: string
-          default: United Kingdom
+          default: Germany
           description: Where would you like it hosted ?
           enum:
             - Germany
