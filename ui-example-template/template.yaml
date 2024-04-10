@@ -77,19 +77,6 @@ spec:
                             - Birmingham
                             - Manchester
                             - Glasgow
-            - properties:
-                hosting_location:
-                  enum: 
-                    - Germany
-                    - Singapore
-                    - United States
-                provider:
-                  title: Provider type
-                  type: string
-                  description: Provider type
-                  default: CMO
-                  enum:
-                    - CMO
     - title: Repository information
       required:
         - repo
