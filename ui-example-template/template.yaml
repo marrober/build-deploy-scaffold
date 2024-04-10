@@ -133,6 +133,7 @@ spec:
       input:
         repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{ parameters.environment_name }}"
         repoVisibility: public
+        token: glpat-m8Akikz1VbrTnkmahmHr
 
     - id: register
       name: Register
