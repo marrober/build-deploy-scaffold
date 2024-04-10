@@ -126,13 +126,13 @@ spec:
           environment_type : ${{ parameters.environment_type }}
           environment_name : ${{ parameters.environment_name }} 
           description : ${{ parameters.description }}
+
     - id: publish
       name: Publish
       action: publish:gitlab
       input:
         repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{ parameters.environment_name }}"
         repoVisibility: public
-        token: ${{ parameters.repo.token }}
 
     - id: register
       name: Register
@@ -140,6 +140,7 @@ spec:
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
+
   
   output:
     links:
