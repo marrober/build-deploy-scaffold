@@ -132,7 +132,6 @@ spec:
       input:
         repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{ parameters.environment_name }}"
         repoVisibility: public
-        token: ${{ parameters.repo.token }}
 
     - id: register
       name: Register
