@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "outDir": "./dist-types/src",
+        "rootDir": "./src"
+    },
+    "include": ["src/index.ts"],
+    "exclude": ["node_modules"]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@markroberts-rh42/dev-quote",
+  "version": "1.0.0",
+  "description": "Quotes inside Developer Hub",
+  "main": "src/index.js",
+  "types": "src/index.js",
+  "license": "Apache-2.0",
+  "author": "Mark Roberts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "backstage": {
+    "role": "frontend-plugin"
+  },
+  "dependencies": {
+    "@parsifal-m/plugin-dev-quotes-homepage": "^3.0.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@backstage/cli": "0.26.4",
+    "@janus-idp/cli": "1.8.4"
+  },
+  "scripts": {
+    "clean": "backstage-cli package clean",
+    "build": "backstage-cli pacakge build",
+    "export-dynamic": "janus-cli package export-dynamic-plugin"
+  },
+  "files": [
+    "dist",
+    "dist-scalprum"
+  ],
+  "scalprum": {
+    "name": "markroberts.dev-quote",
+    "exposedModules": {
+      "PluginRoot": "/src/index.ts"
+    }
+  }
+}
