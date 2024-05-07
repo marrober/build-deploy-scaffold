@@ -86,7 +86,7 @@ spec:
             - 'sandy'
             - 'skylake'
             - 'whiskylake'
-          default: skylake
+          default: conroe
         smee_io_identifier:
           title: SMEE.IO Identifier
           type: string
@@ -129,7 +129,7 @@ spec:
                   title: Image Host
                   type: string
                   description: Host for storing image
-                  default: quay-v788m.apps.cluster-v788m.sandbox1746.opentlc.com
+                  default: quay.io
                 image_organization:
                   title: Organization
                   type: string
@@ -254,19 +254,19 @@ spec:
         repoVisibility: public
         token: ${{ parameters.source_code_repo.token }}
 
-#    - id: log-message-6
-#      name: SCM repo URL
-#      action: debug:log
-#      input: 
-#        message: 'SCM repo URL ${{ steps.publish_scm.output.repoContentsUrl }}'
-#        listWorkspace: false
+    - id: log-message-6
+      name: SCM repo URL
+      action: debug:log
+      input: 
+        message: 'SCM repo URL ${{ steps.publish_scm.output.repoContentsUrl }}'
+        listWorkspace: false
 
-#    - id: register
-#      name: Register SCM content
-#      action: catalog:register
-#      input:
-#        repoContentsUrl: "${{ steps.publish_scm.output.repoContentsUrl }}"
-#        catalogInfoPath: "/catalog-info.yaml"
+    - id: register
+      name: Register SCM content
+      action: catalog:register
+      input:
+        repoContentsUrl: "${{ steps.publish_scm.output.repoContentsUrl }}"
+        catalogInfoPath: "/catalog-info.yaml"
 
     - id: template-gitops-deployment
       name: Generating deployment resources

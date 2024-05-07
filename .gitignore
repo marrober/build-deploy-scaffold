@@ -1,1 +1,4 @@
 **/node_modules
+**/dist-scalprum
+**/dist-types
+**/yarn-error.log
