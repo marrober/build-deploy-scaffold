@@ -1,6 +1,6 @@
 {
   "name": "@markroberts-rh42/dev-quote",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Quotes inside Developer Hub",
   "main": "src/index.js",
   "types": "src/index.js",
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "clean": "backstage-cli package clean",
-    "build": "backstage-cli pacakge build",
+    "build": "backstage-cli package build",
     "export-dynamic": "janus-cli package export-dynamic-plugin"
   },
   "files": [
