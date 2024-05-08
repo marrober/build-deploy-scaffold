@@ -218,13 +218,6 @@ spec:
         message: 'gitops project name : ${{ parameters.gitops_project_name }}'
         listWorkspace: false
 
-    - id: log-message-6
-      name: SCM repo URL
-      action: debug:log
-      input: 
-        message: 'SCM repo URL ${{ steps.publish_scm.output.repoContentsUrl }}'
-        listWorkspace: false
-
     - id: log-message-5
       name: GitOps repo URL
       action: debug:log

@@ -6,7 +6,6 @@ metadata:
 spec:
   type: url
   targets:
-     - https://github.com/marrober/build-deploy-scaffold/blob/main/ansible/scaffolder-templates/ansible-job/template.yaml
      - https://github.com/marrober/build-deploy-scaffold/blob/main/app-build-deploy-template/template.yaml
      - https://github.com/marrober/build-deploy-scaffold/blob/main/register-component-lab/template.yaml
 
