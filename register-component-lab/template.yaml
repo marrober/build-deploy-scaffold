@@ -35,22 +35,27 @@ spec:
               title: Repo Host
               type: string
               description: Your SCM host
-              default: gitlab-gitlab.apps.cluster-xv8vf.sandbox186.opentlc.com
+              default: github.com
               enum:
-                - gitlab-gitlab.apps.cluster-xv8vf.sandbox186.opentlc.com
+                - github.com
             owner:
               title: Repo Owner
               type: string
               description: Your SCM host organization/group
-              default: development
+              default: marrober
               enum:
-                - development
+                - marrober
+            token: 
+              title: Github authentication token
+              type: string
+              description: A Github authentication token to be used to create repositories.
   steps:
     - id: log
-      name: Log parameters
+      name: Log parameters - 1
       action: debug:log
       input: 
         message: 'Parameters -> component_id : ${{ parameters.component_id }} description : ${{ parameters.description }}'
+
     - id: template
       name: Fetch Skeleton + Template
       action: fetch:template
@@ -67,10 +72,17 @@ spec:
           
     - id: publish
       name: Publish
-      action: publish:gitlab
+      action: publish:github
       input:
         repoUrl: "${{ parameters.repo.host }}?owner=${{ parameters.repo.owner }}&repo=${{parameters.component_id}}"
         repoVisibility: public
+        token: ${{ parameters.repo.token }}
+
+    - id: log
+      name: Log parameters - 2
+      action: debug:log
+      input: 
+        message: 'Parameters -> repoContentsUrl : ${{ steps.publish.output.repoContentsUrl }}'
 
     - id: register
       name: Register
@@ -78,6 +90,12 @@ spec:
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
+
+    - id: log
+      name: Log parameters - 3
+      action: debug:log
+      input: 
+        message: 'Parameters -> catalogInfoUrl : ${{ steps.register.output.catalogInfoUrl }}'
   
   output:
     links:
