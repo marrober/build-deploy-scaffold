@@ -12,4 +12,3 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: ${{values.repo.owner | dump}} 
