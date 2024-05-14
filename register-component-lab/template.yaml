@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: add-component-template-2
-  title: Onboard your component to RHDH-2
+  title: Onboard your component to RHDH-2.1
   description: Create and register a new component to RHDH Catalog
   tags:
     - java
