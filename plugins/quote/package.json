@@ -1,6 +1,6 @@
 {
   "name": "@markroberts-rh42/dev-quote",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Quotes inside Developer Hub",
   "main": "src/index.js",
   "types": "src/index.js",
