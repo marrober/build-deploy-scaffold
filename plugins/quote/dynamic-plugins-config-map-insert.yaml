@@ -1,0 +1,22 @@
+  plugins:
+    - package: '@markroberts-rh42/dev-quote'
+      integrity: >-
+        sha512-VBYD2QzSOwf1xR6ze82bXaa6Ov6Q2JnlRcRa9oTdCsRCdDVbc0k1GTORsOMyQl9MuvwVg7N4MKTVXu1XwD9qnQ==
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            markroberts.dev-quote:
+              dynamicRoutes:
+                - importName: DevQuote
+                  menuItem:
+                    text: Quote
+                  path: /devquote
+              mountPoints:
+                - config:
+                    layout:
+                      gridColumnEnd:
+                        lg: span 4
+                        md: span 6
+                        xs: span 12
+                  importName: DevQuote
+                  mountPoint: entity.page.overview/cards
