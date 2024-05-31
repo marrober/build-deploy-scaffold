@@ -10,12 +10,12 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
-  name: development
+  name: marrober
   description: Red Hat Developer Hub user team
 spec:
   type: team
   profile:
-    displayName: development
+    displayName: marrober
     picture: https://developers.redhat.com/sites/default/files/styles/article_feature/public/blog/2019/12/RedHatDeveloper_FeaturedImage.webp?itok=je5IHjLK
   parent: rhdh
   children: []
@@ -29,4 +29,4 @@ spec:
     # Intentional no displayName for testing
     email: marrober@redhat.com
     picture: https://avatars.dicebear.com/api/avataaars/breanna-davison@example.com.svg?background=%23fff
-  memberOf: [development]
+  memberOf: [marrober]
