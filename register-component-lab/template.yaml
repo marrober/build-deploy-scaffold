@@ -2,12 +2,12 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: add-component-template-2
-  title: Onboard your component to RHDH-2.3
+  title: Onboard your component to RHDH-2.4
   description: Create and register a new component to RHDH Catalog
   tags:
     - java
 spec:
-  owner: admin
+  owner: rhdh
   type: service
   parameters:
     - title: Provide new component details
@@ -83,6 +83,12 @@ spec:
       action: debug:log
       input: 
         message: 'Parameters -> repoContentsUrl : ${{ steps.publish.output.repoContentsUrl }}'
+
+    - id: log
+      name: Log parameters - 2-a
+      action: debug:log
+      input: 
+        message: 'Parameters -> owner : ${{ user.entity.metadata.name }}'
 
     - id: register
       name: Register
