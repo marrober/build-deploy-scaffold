@@ -2,25 +2,22 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: app-config-rhdh
-  namespace: devhub
-  uid: 14048cc7-c54c-470f-9d4a-d974a4a68333
-  resourceVersion: '4886496'
-  creationTimestamp: '2024-04-02T14:21:43Z'
-  managedFields:
-    - manager: Mozilla
-      operation: Update
-      apiVersion: v1
-      time: '2024-04-03T11:41:34Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:data':
-          .: {}
-          'f:app-config-rhdh.yaml': {}
 data:
   app-config-rhdh.yaml: |
     app:
       title: Red Hat Developer Hub
-      baseUrl: https://rhdh-developer-hub-devhub.apps.conroe.demolab.local/
+      baseUrl: ${RHDH_BASE_URL}
+    backend:
+      auth:
+        keys:
+        - secret: ${BACKEND_SECRET}
+      baseUrl: ${RHDH_BASE_URL}
+      cors:
+        origin: ${RHDH_BASE_URL}
+      database:
+        connection:
+          password: ${POSTGRESQL_ADMIN_PASSWORD}
+          user: postgres
     integrations:
       github:
         - host: github.com
@@ -48,17 +45,6 @@ data:
           id: development
           githubUrl: "${GITHUB_ORG_URL}"
           orgs: [ "rhdh-uk-mr" ]
-        aap:
-          prod:
-            baseUrl: https://lrcaap.lromeroc.demolab.local
-            authorization: 'Bearer nZJCW4stuSKmG3f22ECOd5JHXGrBAR'
-            owner: default/lromeroc
-            system: prod
-            schedule: # optional; same options as in TaskScheduleDefinition
-              # supports cron, ISO duration, "human duration" as used in code
-              frequency: { minutes: 1 }
-              # supports ISO duration, "human duration" as used in code
-              timeout: { minutes: 1 }
       locations:
       - rules:
         - allow:

@@ -2,3 +2,4 @@
 **/dist-scalprum
 **/dist-types
 **/yarn-error.log
+**/*.pem
