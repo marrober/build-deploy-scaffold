@@ -72,7 +72,7 @@ data:
       appLocatorMethods:
       - instances:
         - name: main
-          password: 7FLprEChz0b2oAVxgDlXeJanMHB6R9Gw
-          url: https://openshift-gitops-server-openshift-gitops.apps.conroe.demolab.local
+          password: ${ARGOCD_PASSWORD}
+          url: ${ARGOCD_ROUTE}
           username: admin
         type: config
