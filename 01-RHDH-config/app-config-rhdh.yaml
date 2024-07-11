@@ -69,10 +69,11 @@ data:
         type: url
 
     argocd:
+      username: admin
+      password: ${ARGOCD_PASSWORD}
       appLocatorMethods:
       - instances:
-        - name: main
-          password: ${ARGOCD_PASSWORD}
+        - name: argocd
           url: ${ARGOCD_ROUTE}
-          username: admin
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcmdvY2QiLCJzdWIiOiJkaF9hZG1pbjphcGlLZXkiLCJuYmYiOjE3MjA2OTU4NzksImlhdCI6MTcyMDY5NTg3OSwianRpIjoiMDhiMWI3MzQtM2QyYi00NWFjLTg5MzAtZTkzODBmZjVjYTNmIn0.wGHdk9McBRJZTKpYWugBPDdeJfI_fYHGNGRd4obacp4
         type: config
