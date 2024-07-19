@@ -7,7 +7,5 @@ spec:
   type: url
   targets:
      - https://github.com/marrober/build-deploy-scaffold/blob/main/app-build-deploy-template/template.yaml
-  type: url
-  targets:
      - https://github.com/rh-uki-openshift-ssa/developer-hub-templates/blob/main/gen-ai-project/template.yaml
 
