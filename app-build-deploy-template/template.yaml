@@ -309,6 +309,7 @@ spec:
       action: argocd:create-resources
       input:
         appName: ${{ parameters.application_name }}-ci
+        projectName: ${{ parameters.application_name }}
         argoInstance: argocd
         namespace: openshift-gitops
         repoUrl: https://${{ parameters.gitops_repo.host }}/${{ parameters.gitops_repo.owner }}/${{ parameters.application_name }}-gitops.git
