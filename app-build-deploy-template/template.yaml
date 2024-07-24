@@ -162,7 +162,7 @@ spec:
               enum:
                   - github.com
                   - gitlab.com
-              default: git
+              default: github.com
             owner:
               title: Repo Owner
               type: string
