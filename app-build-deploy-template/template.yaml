@@ -198,7 +198,7 @@ spec:
         listWorkspace: false
 
     - id: log-message-2
-      name: SCN Repo URL
+      name: SCM Repo URL
       action: debug:log
       input: 
         message: 'SCM repo URL (input) ${{ parameters.source_code_repo.host }}?owner=${{ parameters.source_code_repo.owner }}&repo=${{ parameters.application_name}}-scm'
