@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: application-build-deploy-template
-  title: Application with build process (Tekton) and deployment process (ArgoCD) - 0.3
+  title: Application with build process (Tekton) and deployment process (ArgoCD) - 0.4
   description: Create a simple microservice to be built with Tekton Pipeline and deployed with ArgoCD. This includes a security check with ACS.
   tags:
     - java
@@ -20,7 +20,7 @@ spec:
           title: Application name
           type: string
           description: Unique name of the application
-          pattern: '^[a-z0-9]*$'
+          pattern: '^[a-z0-9-]*$'
           maxLength: 20
           default: pacman1
         description:
@@ -43,7 +43,7 @@ spec:
               enum:
                   - github.com
                   - gitlab.com
-              default: git
+              default: github.com
             owner:
               title: Repo Owner
               type: string
@@ -178,17 +178,17 @@ spec:
               type: string
               description: Email address of the user named above
               default: marrober@redhat.com
-    - title: Application ownership and responsibilities
-      required:
-        - application_owner
-      properties:
-        application_owner:
-          title: Application owner
-          type: string
-          description: The responsible owner of the application
-          pattern: '^[A-Z][A-Za-z ]*$'
-          maxLength: 20
-          default: Mark Roberts
+#    - title: Application ownership and responsibilities
+#      required:
+#        - application_owner
+#      properties:
+#        application_owner:
+#          title: Application owner
+#          type: string
+#          description: The responsible owner of the application
+#          pattern: '^[A-Z][A-Za-z ]*$'
+#          maxLength: 20
+#          default: Mark Roberts
   steps:
     - id: log-message-1
       name: Application and repo details
@@ -307,7 +307,7 @@ spec:
       action: argocd:create-resources
       input:
         appName: ${{ parameters.application_name }}-ci
-        argoInstance: main
+        argoInstance: argocd
         namespace: openshift-gitops
         repoUrl: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.application_name }}-gitops.git
         path: 'argocd/'
