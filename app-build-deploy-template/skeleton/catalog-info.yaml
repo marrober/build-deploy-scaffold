@@ -8,9 +8,10 @@ metadata:
   annotations:
     gitlab.com/project: ${{ values.destination }}
     argocd/app-selector: ${{ values.destination}}/openshift-gitops=${{values.application_name}}
+    argocd/app-name: 
     backstage.io/kubernetes-id: ${{values.application_name}}
     janus-idp.io/tekton: ${{values.application_name}}
-    backstage.io/source-location: url:https://${{values.host}}/${{values.destination}}
+    backstage.io/source-location: url:https://${{values.destination}}-scm
     backstage.io/techdocs-ref: url:https://${{values.host}}/${{values.destination}}
     gitlab.com/project-slug: ${{values.destination}}
     quay.io/repository-slug: ${{values.quay_destination | dump}}

@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: application-build-deploy-template
-  title: Application with build process (Tekton) and deployment process (ArgoCD) - 0.2
+  title: Application with build process (Tekton) and deployment process (ArgoCD) - 0.3
   description: Create a simple microservice to be built with Tekton Pipeline and deployed with ArgoCD. This includes a security check with ACS.
   tags:
     - java
@@ -301,6 +301,16 @@ spec:
         sourcePath: ./tenant-gitops
         repoVisibility: public
         token: ${{ parameters.source_code_repo.token }}
+
+    - id: create-argocd-resources
+      name: Create ArgoCD Resources
+      action: argocd:create-resources
+      input:
+        appName: ${{ parameters.application_name }}-ci
+        argoInstance: main
+        namespace: openshift-gitops
+        repoUrl: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{ parameters.application_name }}-gitops.git
+        path: 'argocd/'
 
   output:
     links:
