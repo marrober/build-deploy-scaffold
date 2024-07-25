@@ -3,4 +3,5 @@ kind: Kustomization
 
 resources:
 - myapp-project.yaml
+- argo-root-app.yaml
 - ci-application.yaml

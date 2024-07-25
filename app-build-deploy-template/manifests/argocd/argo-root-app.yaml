@@ -1,12 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ${{ values.application_name }} -ci
+  creationTimestamp: null
+  name: ${{ values.application_name }}-root
   namespace: openshift-gitops
 spec:
   project: ${{ values.application_name }}
   destination:
-    namespace: ${{ values.application_name }}-ci
+    namespace: openshift-gitops
     server: https://kubernetes.default.svc
   ignoreDifferences:
   - group: argoproj.io
@@ -30,7 +31,7 @@ spec:
     - /spec/host
     kind: Route
   source:
-    path: ci-pipeline
+    path: argocd
     targetRevision: main
     repoURL: ${{ values.destination }}
   syncPolicy:
@@ -40,7 +41,7 @@ spec:
       allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
     syncOptions:     # Sync options which modifies sync behavior
     - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
-    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - CreateNamespace=false # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
     - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
     - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
     retry:
