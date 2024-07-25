@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ${{ values.application_name }} -ci
+  name: ${{ values.application_name }}-ci
   namespace: openshift-gitops
 spec:
   project: ${{ values.application_name }}
