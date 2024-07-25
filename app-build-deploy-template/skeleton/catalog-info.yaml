@@ -7,7 +7,7 @@ metadata:
   {%- endif %}
   annotations:
     gitlab.com/project: ${{ values.destination }}
-#    argocd/app-selector: ${{ values.destination}}/openshift-gitops=${{values.application_name}}
+    argocd/app-selector: rht-gitops.com/openshift-gitops=${{values.application_name}}-root
     backstage.io/kubernetes-id: ${{values.application_name}}
     backstage.io/kubernetes-namespace: ${{ values.destination }}-ci
     argocd/app-name: ${{ values.destination }}-root
