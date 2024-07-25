@@ -13,7 +13,7 @@ spec:
   params:
     ## repository parameters
   - name: GIT_REPO
-    value: https://github.com/marrober/pacman.git
+    value: ${{ values.source_repository }}
   - name: GIT_REVISION
     value: ""
     ## Image build parameters
