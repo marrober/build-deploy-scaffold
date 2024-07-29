@@ -9,13 +9,16 @@ metadata:
     gitlab.com/project: ${{ values.destination }}
     argocd/app-selector: rht-gitops.com/openshift-gitops=${{values.application_name}}-root
     backstage.io/kubernetes-id: ${{values.application_name}}
-    backstage.io/kubernetes-namespace: ${{ values.destination }}-ci
+    backstage.io/kubernetes-namespace: ${{values.application_name}}-ci
     argocd/app-name: ${{ values.destination }}-root
     janus-idp.io/tekton: ${{values.application_name}}
     backstage.io/source-location: url:https://${{values.destination}}-scm
     backstage.io/techdocs-ref: url:${{values.destination}}-scm
     gitlab.com/project-slug: ${{values.destination}}
     quay.io/repository-slug: ${{values.quay_destination | dump}}
+    janus-idp.io/tekton-enabled : 'true'
+  labels:
+    backstage.io/kubernetes-id: ${{values.application_name}}
   tags:
     - mr-test
   links:
