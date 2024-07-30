@@ -1,2 +1,139 @@
-NAME              DATA   AGE
-dynamic-plugins   1      2d3h
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dynamic-plugins
+  namespace: developer-hub
+  uid: c5fa7f6b-590a-4c86-9edc-f0869559044a
+  resourceVersion: '4320831'
+  creationTimestamp: '2024-07-23T12:22:57Z'
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: redhat-developer-hub
+    meta.helm.sh/release-namespace: developer-hub
+  managedFields:
+    - manager: bridge
+      operation: Update
+      apiVersion: v1
+      time: '2024-07-23T12:42:53Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data': {}
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:meta.helm.sh/release-name': {}
+            'f:meta.helm.sh/release-namespace': {}
+          'f:labels':
+            .: {}
+            'f:app.kubernetes.io/managed-by': {}
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2024-07-29T14:08:25Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          'f:dynamic-plugins.yaml': {}
+data:
+  dynamic-plugins.yaml: |
+    includes:
+    - dynamic-plugins.default.yaml
+    plugins:
+    - disabled: false
+      package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-org-dynamic
+    - disabled: false
+      package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+    - disabled: false
+      package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-argocd-dynamic
+    - disabled: false
+      package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-argocd
+    - disabled: true
+      package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
+    - disabled: false
+      package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-tekton
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            janus-idp.backstage-plugin-tekton:
+              mountPoints:
+              - config:
+                  if:
+                    allOf:
+                    - isTektonCIAvailable
+                  layout:
+                    gridColumn: 1 / -1
+                    gridRowStart: 1
+                importName: TektonCI
+                mountPoint: entity.page.ci/cards
+    - disabled: false
+      package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-quay
+    - disabled: false
+      package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-topology
+    - disabled: false
+      package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
+    - disabled: false
+      package: ./dynamic-plugins/dist/backstage-plugin-techdocs
+    - disabled: false
+      package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-module-utils-dynamic
+    - disabled: false
+      package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-topology
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            janus-idp.backstage-plugin-topology:
+              mountPoints:
+              - mountPoint: entity.page.topology/cards
+                importName: TopologyPage
+                config:
+                  layout:
+                    gridColumn: "1 / -1"
+                    height: 75vh
+                  if:
+                    anyOf:
+                    - hasAnnotation: backstage.io/kubernetes-id
+                    - hasAnnotation: backstage.io/kubernetes-namespace
+    - disabled: false                    
+      package: './dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic'
+      pluginConfig:
+        kubernetes:
+          customResources:
+          - group: 'tekton.dev'
+            apiVersion: 'v1beta1'
+            plural: 'pipelines'
+          - group: 'tekton.dev'
+            apiVersion: 'v1beta1'
+            plural: 'pipelineruns'
+          - group: 'tekton.dev'
+            apiVersion: 'v1beta1'
+            plural: 'taskruns'
+          - group: 'route.openshift.io'
+            apiVersion: 'v1'
+            plural: 'routes'
+          serviceLocatorMethod:
+            type: 'multiTenant'
+          clusterLocatorMethods:
+            - type: 'config'
+              clusters:
+                - name: ocp
+                  url: https://api.cluster-vhdnd.sandbox2089.opentlc.com:6443
+                  authProvider: 'serviceAccount'
+                  skipTLSVerify: true
+                  skipMetricsLookup: true
+                  serviceAccountToken: eyJhbGciOiJSUzI1NiIsImtpZCI6IkhkVnhkei0yTXhnWkV5ZnY3bnUwX2tjY3RzMG84WG5Kc1NIaDR6aXAzcFkifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZXZlbG9wZXItaHViIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Imt1YmUtc2EiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVmYXVsdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjE2YjY0NWVhLTViMDQtNDBkYi04YTA4LTkwNmZkMmU0ZDYwNCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZXZlbG9wZXItaHViOmRlZmF1bHQifQ.QCuGVLPdSkF5Mc852jHqCLB-6kH8mCkULHNMUUfKRkoGgkfOAJfOvgC91Q9WQaZpvcyDCCo7OSZCBHume7kW0fklgtgDy67oIUAgGEKcfQ_YzkbE9Blwp63t_vylzZkxeWwHU3zLnNoIBA7f6bbJ2A_57oXVbiZmEKYiXMfSk7Br4ZU3uMJ89n1pm8EDDWwm2zCcvBuvxJ8KyDWvKjs-2DKw5MF0U7rexEIcULNvXroVMkTnLr2aH1OdKnzRu4rFx5zX98keKJWCjLK-d9encMdrtwEyqjQcDHxSbYC8I9TSiVgt0QYLz4QSBDtIA68ri_qkFf7F084a5r_p2mhqpiDDac1Hr3WS6iAbaoglssFnKHhFOpez-Syc2c5NeDEXGxdhtnpAohJI-AoAKGpD8UxS-jzsC3anGf2bzol6T0Iih2_KqHepZcGReKDCQmaqdMFrxtfZO-Icuwdy5kw2wx5yD7D_pjmd62WPJFXwvv_i3fi2ZdBG457Wfu82zFobea7ZqsJjFgOd8-nyAV9ZJ2CoVN6a2ru8D3gp2lDv2qMuvgZvTvWHZlpn4MuDA4rCmLn1DV_pvJv9tk8KO0S3zlpYkp3Akk648GzB-YIyLFA5cOify4N-GCOSN06qV8ZKLw1Sc-959RTpML49X9FO0mTxXAuusMxEtT172hrsfTE
+    - disabled: false
+      package: './dynamic-plugins/dist/backstage-plugin-kubernetes'
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            backstage.plugin-kubernetes:
+              mountPoints:
+              - mountPoint: entity.page.kubernetes/cards
+                importName: EntityKubernetesContent
+                config:
+                  layout:
+                    gridColumn: "1 / -1"
+                  if:
+                    anyOf:
+                    - hasAnnotation: backstage.io/kubernetes-id
+                    - hasAnnotation: backstage.io/kubernetes-namespace

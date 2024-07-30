@@ -49,9 +49,8 @@ spec:
     value: " ${{ values.cd-git-username }} "
   - name: cd-git-user-email
     value: " ${{ values.cd-git-email-address }} "
-    
   pipelineRef:
-    name: pacman
+    name: ${{ values.application_name }}-pipeline
   taskRunTemplate:
     serviceAccountName: pipeline
   timeouts:
